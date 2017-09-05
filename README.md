@@ -11,3 +11,17 @@ The Vagrantfile exposes 2 optional environment variables, enabling a VM to conne
 
 # Security Notes
 The box is provisioned with a pre-created public key that corresponds to the private key `files/vagrant`. You can (and should) replace it with your own and make sure you specify the corresponding private key in the Vagrantfile by setting **config.ssh.private_key_path**.
+
+# Compatibility
+Tested with all combinations of the following versions of Packer and Linux flavors:
+Packer:
+* 1.0.4
+
+Vagrant:
+* 1.9.7
+* 1.9.8
+
+Linux:
+* Debian GNU/Linux 9
+* Fedora 26
+* Linux Mint 18.2.
