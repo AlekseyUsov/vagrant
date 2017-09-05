@@ -14,6 +14,7 @@ Vagrant.configure("2") do |config|
       node.ssh.private_key_path = "files/vagrant"
       node.vm.box = "centos7-libvirt"
       node.vm.provision "shell", inline: "hostnamectl set-hostname #{hostname}"
+      node.vm.provision "shell", path: "files/proxy-provisioner.sh", args: [ "-h#{ENV.fetch('VAGRANT_PROXY_HOST' ,'')}", "-p#{ENV.fetch('VAGRANT_PROXY_PORT', '3128')}" ]
       node.vm.provider :libvirt do |domain|
         domain.driver = "kvm"
         domain.cpus = "#{info[:vcpus]}"
