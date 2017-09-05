@@ -7,5 +7,7 @@ As it's almost always the case with Vagrant, it takes only a couple of commands 
 2. `vagrant up`
 These commands will spin up 5 VMs using the box built by [Packer](https://www.packer.io) using template from git@github.com:AlekseyUsov/packer.git .
 
+The Vagrantfile exposes 2 optional environment variables, enabling a VM to connect to proxy, which may be useful in an isolated corporate environment. Their names are self-explanatory.
+
 # Security Notes
 The box is provisioned with a pre-created public key that corresponds to the private key `files/vagrant`. You can (and should) replace it with your own and make sure you specify the corresponding private key in the Vagrantfile by setting **config.ssh.private_key_path**.
