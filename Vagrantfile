@@ -10,8 +10,9 @@ Vagrant.configure("2") do |config|
       node.ssh.username = "vagrant"
       node.ssh.private_key_path = "files/vagrant"
       node.vm.box = "centos7-libvirt"
-      node.vm.provision "shell", inline: "hostnamectl set-hostname #{hostname}"
+      node.vm.provision "shell", inline: "hostnamectl set-hostname #{hostname}.example.com"
       node.vm.provision "shell", path: "files/proxy-provisioner.sh", args: [ "-h#{ENV.fetch('VAGRANT_PROXY_HOST' ,'')}", "-p#{ENV.fetch('VAGRANT_PROXY_PORT', '3128')}" ]
+      node.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/"
       node.vm.provider :libvirt do |domain|
         domain.driver = "kvm"
         domain.cpus = "2"
@@ -24,6 +25,7 @@ Vagrant.configure("2") do |config|
         domain.disk_device = "vda"
         domain.cpu_mode = "host-model"
         domain.cpu_model = "qemu64"
+	domain.storage :file, :size => '10G', :device => 'vdb'
       end
     end
   end

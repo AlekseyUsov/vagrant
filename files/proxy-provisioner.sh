@@ -27,7 +27,7 @@ done
 echo ${PROXY}
 
 if [ ! -z "${PROXY}" ]; then
-  echo -e proxy="\nhttp://${PROXY}\n" >> /etc/yum.conf
+  echo -e proxy="http://${PROXY}\n" >> /etc/yum.conf
   echo -e "\nexport http_proxy=http://${PROXY}" >> ${PROFILE}
   echo -e "export https_proxy=https://${PROXY}\n" >> ${PROFILE}
   echo -e "export no_proxy=127.0.0.1,localhost\n" >> ${PROFILE}
