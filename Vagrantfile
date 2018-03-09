@@ -2,7 +2,7 @@ cluster = {}
 
 UPPER_BOUND = (++ENV.fetch('VAGRANT_VM_COUNT', '1').to_i)
 
-(1..UPPER_BOUND).map {|x| cluster["node-#{x}"] = { :vcpus => "2", :ram => "1024" }}
+(1..UPPER_BOUND).map {|x| cluster["node-#{x}"] = { :vcpus => (++ENV.fetch('VAGRANT_VM_VCPUS', '2').to_i), :ram => (++ENV.fetch('VAGRANT_VM_RAM', '4096').to_i) }}
 
 Vagrant.configure("2") do |config|
   cluster.each_with_index do |(hostname, info), index|
@@ -15,8 +15,8 @@ Vagrant.configure("2") do |config|
       node.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ".git/"
       node.vm.provider :libvirt do |domain|
         domain.driver = "kvm"
-        domain.cpus = "2"
-        domain.memory = "1024"
+        domain.cpus = info[:vcpus]
+        domain.memory = info[:ram]
         domain.nested = "true"
         domain.machine_type = "pc"
         domain.machine_arch = "x86_64"
